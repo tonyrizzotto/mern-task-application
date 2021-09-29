@@ -31,17 +31,16 @@ router.get('/tasks', auth, async (req, res) => {
 
   if (req.query.sortBy) {
     const parts = req.query.sortBy.split(':');
-    console.log(parts);
+
     sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
   }
-  console.log(sort);
   try {
     // Get All Tasks
     //await req.user.populate('tasks');
     await req.user.populate({
       path: 'tasks',
       match,
-      // per documentation options need a default value
+      // per documentation, options need a default value
       options: {
         limit: parseInt(req.query.limit) || null,
         skip: parseInt(req.query.skip) || null,
